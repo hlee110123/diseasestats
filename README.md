@@ -22,10 +22,10 @@ Analysis of Healthcare Data (2016–2024):
 16. Bed-size category (small, medium, large)
 17. Teaching hospital : (Urban nonteaching or rural or urban teaching)
 
-# Installation: DRG package from GITHUB 
+# Installation: diseasestats package from GITHUB 
 
 ```r
-remotes::install_github("hlee110123/DRG")
+remotes::install_github("hlee110123/diseasestats")
 ```
 # How to run
 
