@@ -15,6 +15,20 @@ validate_connection <- function(conn) {
   TRUE
 }
 
+#' Validate DatabaseConnector Connection
+#'
+#' Internal function to validate DatabaseConnector connection object
+#'
+#' @param conn A DatabaseConnector connection object
+#' @return TRUE if valid, throws error if invalid
+#' @keywords internal
+validate_connection_db_connector <- function(conn) {
+  if (is.null(conn) || !inherits(conn, "connection")) {
+    stop("Invalid connection object. Please provide a valid DatabaseConnector connection", call. = FALSE)
+  }
+  TRUE
+}
+
 #' Validate Schema Name
 #'
 #' Internal function to validate schema name
@@ -43,4 +57,40 @@ validate_category <- function(category) {
          call. = FALSE)
   }
   TRUE
+}
+
+#' Validate ATC Code
+#'
+#' Internal function to validate ATC code
+#'
+#' @param atc_code Character string of ATC code
+#' @return TRUE if valid, throws error if invalid
+#' @keywords internal
+validate_atc_code <- function(atc_code) {
+  if (!atc_code %in% names(ATC_CATEGORIES)) {
+    stop(paste("Invalid ATC code. Must be one of:",
+               paste(names(ATC_CATEGORIES), collapse = ", ")),
+         call. = FALSE)
+  }
+  TRUE
+}
+
+#' Validate Date Format
+#'
+#' Internal function to validate date format
+#'
+#' @param date_str Character string representing a date in YYYY-MM-DD format
+#' @param date_name Character string with the name of the date parameter for error messages
+#' @return Date object if valid, throws error if invalid
+#' @keywords internal
+validate_date <- function(date_str, date_name = "date") {
+  tryCatch({
+    date <- as.Date(date_str)
+    if (is.na(date)) {
+      stop(paste0("Invalid ", date_name, ". Please use YYYY-MM-DD format."), call. = FALSE)
+    }
+    return(date)
+  }, error = function(e) {
+    stop(paste0("Invalid ", date_name, ". Please use YYYY-MM-DD format."), call. = FALSE)
+  })
 }
